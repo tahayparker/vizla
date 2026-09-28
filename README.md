@@ -2,11 +2,6 @@
 
 > Interactive course timetable planner, group constraint solver, and scheduling conflict detector for University of Wollongong in Dubai (UOWD).
 
-[![Next.js](https://img.shields.io/badge/Next.js-16.3.6-black?logo=next.js)](https://nextjs.org/)
-[![React](https://img.shields.io/badge/React-19.2.7-blue?logo=react)](https://react.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)](https://www.typescriptlang.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-38B2AC?logo=tailwind-css)](https://tailwindcss.com/)
-
 ---
 
 ## Overview
@@ -63,6 +58,7 @@ npm run start
 
 ## Related Projects
 
+- [**UOWD-timetable-visualizer**](github.com/adakidpv/UOWD-timetable-visualizer) - The OG project that prompted this
 - [**vacansee**](https://github.com/tahayparker/vacansee) - Real-time classroom and campus room vacancy tracker.
 - [**vaila**](https://github.com/tahayparker/vaila) - Faculty timetable and teacher schedule visualizer.
 
