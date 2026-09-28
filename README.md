@@ -58,7 +58,7 @@ npm run start
 
 ## Related Projects
 
-- [**UOWD-timetable-visualizer**](github.com/adakidpv/UOWD-timetable-visualizer) - The OG project that prompted this
+- [**UOWD-timetable-visualizer**](https://github.com/adakidpv/UOWD-timetable-visualizer) - The OG project that prompted this
 - [**vacansee**](https://github.com/tahayparker/vacansee) - Real-time classroom and campus room vacancy tracker.
 - [**vaila**](https://github.com/tahayparker/vaila) - Faculty timetable and teacher schedule visualizer.
 
