@@ -1,0 +1,68 @@
+name: Refresh Timetable Data
+
+on:
+  repository_dispatch:
+    types: [vacansee-data-updated]
+  workflow_dispatch:
+  schedule:
+    # Safety-net daily run at 05:40 UTC in case the dispatch trigger ever drops
+    - cron: "40 5 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    concurrency:
+      group: vizla-refresh
+      cancel-in-progress: false
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Fetch latest raw timetable data from vacansee
+        run: |
+          mkdir -p src/data
+          curl -sSfL https://raw.githubusercontent.com/tahayparker/vacansee/main/public/timetable_raw.json -o src/data/timetable_raw.json
+          curl -sSfL https://raw.githubusercontent.com/tahayparker/vacansee/main/public/raw_classes.csv -o src/data/raw_classes.csv
+
+      - name: Verify build with new data
+        run: npm run build
+
+      - name: Commit and push
+        run: |
+          set -euo pipefail
+          git config user.name "Taha Parker"
+          git config user.email "98612931+tahayparker@users.noreply.github.com"
+          git add src/data/timetable_raw.json src/data/raw_classes.csv
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "data: refresh timetable data from vacansee [skip ci]"
+
+          for attempt in 1 2 3; do
+            if git push origin main; then
+              echo "Successfully pushed updated timetable data to vizla."
+              exit 0
+            fi
+            echo "Push attempt $attempt failed. Rebasing against origin/main..."
+            git pull --rebase origin main || true
+            sleep 3
+          done
+          echo "::error::Failed to push changes after 3 attempts."
+          exit 1
