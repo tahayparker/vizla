@@ -5,6 +5,7 @@ import PlasmaBackground from "@/components/PlasmaBackground";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { TimetableProvider } from "@/context/TimetableContext";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   title: {
@@ -43,6 +44,7 @@ export default function RootLayout({
           </main>
           <SiteFooter />
         </TimetableProvider>
+        <Analytics />
       </body>
     </html>
   );
